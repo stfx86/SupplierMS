@@ -2,7 +2,6 @@
 import '../styles/ConnectWallet.css';
 
 import { useState, useEffect } from 'react';
-
 import { ethers } from 'ethers';
 
 function ConnectWallet({ onConnected }) {
