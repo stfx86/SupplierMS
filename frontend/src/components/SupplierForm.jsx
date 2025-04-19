@@ -8,12 +8,7 @@ function SupplierForm() {
     serviceType: ''
   });
 
-  const handleChange = (e) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
-  };
+  const handleChange = (e) => { setFormData(prev => ({...prev,[e.target.name]: e.target.value})); };
 
   const handleSubmit = (e) => {
     e.preventDefault();
