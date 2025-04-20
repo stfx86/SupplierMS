@@ -11,3 +11,11 @@ REPORT_GAS=true npx hardhat test
 npx hardhat node
 npx hardhat ignition deploy ./ignition/modules/Lock.js
 ```
+
+<mynotes>
+// Use .target instead of .address for newer ethers versions
+
+
+
+
+<mynotes/>

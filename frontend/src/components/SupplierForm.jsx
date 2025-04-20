@@ -12,13 +12,14 @@ function SupplierForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     // You would handle form submission here, maybe send to a smart contract or API
     console.log('Supplier Registered:', formData);
   };
 
   return (
     <form onSubmit={handleSubmit} className="supplier-form"  >
-      <h2 className="text-xl font-semibold">Register as a Supplier</h2>
+      <h2>Register as a Supplier</h2>
 
       <div  className="form-group" >
         <label htmlFor="name" >Name</label>
@@ -68,3 +69,4 @@ function SupplierForm() {
 }
 
 export default SupplierForm;
+
