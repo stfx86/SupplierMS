@@ -12,6 +12,35 @@ npx hardhat node
 npx hardhat ignition deploy ./ignition/modules/Lock.js
 ```
 
+
+<q>
+wallet only for authentication ?
+
+</>
+
+
+
+
+
+<q>
+legality?
+
+</>
+
+
+
+
+<q>
+supplier attributs?
+
+
+</>
+
+
+
+
+
+
 <mynotes>
 // Use .target instead of .address for newer ethers versions
 
@@ -19,3 +48,6 @@ npx hardhat ignition deploy ./ignition/modules/Lock.js
 
 
 <mynotes/>
+
+
+

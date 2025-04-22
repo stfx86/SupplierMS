@@ -33,11 +33,8 @@ async function verify() {
       throw new Error('Contract not deployed at this address');
     }
     
-    // Try a simple call (if your contract has any view functions)
-    // Example: 
-    // const count = await supplierRegistry.supplierCount();
-    // console.log("Supplier count:", count.toString());
-    const infos  = await supplierRegistry.getSupplier("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266");
+    
+    const infos  = await supplierRegistry.getSupplier("0x8626f6940e2eb28930efb4cef49b2d1f2c9c1199");
 console.log(infos);
 
 

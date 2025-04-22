@@ -4,13 +4,16 @@ import './App.css'
 import SupplierForm from './components/SupplierForm';
 import ConnectWallet from './components/ConnectWallet';
 import Navbar from "./components/Navbar";
+import { useWallet } from './contexts/WalletContext';
 
 import { useState ,React } from 'react'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
+import  About  from './components/About';
 
 function App() {
-  const [userAddress, setUserAddress] = useState(null);
+ 
+  // const [signer, setSigner] = useState(null);
+  const { signer } = useWallet();
 
 
   return (
@@ -18,15 +21,15 @@ function App() {
 
       <Navbar className="navbar" />
       <div >
-      <ConnectWallet onConnected={(address) => setUserAddress(address)} />
-      {userAddress && <p>You can now register as a supplier ✅</p>}
+      <ConnectWallet />
+      {signer && <p>You can now register as a supplier ✅</p>}
     </div>
 
       <main >
         <Routes>
           <Route path="/" element={<h2>Home Page</h2>} />
           <Route path="/suppliers" element={<h2>Suppliers Page</h2>} />
-          <Route path="/about" element={<h2>About Page</h2>} />
+          <Route path="/about" element={<About/>} />
           <Route path="/RegisterSupplier" element={<SupplierForm/>} />
         </Routes>
       </main>

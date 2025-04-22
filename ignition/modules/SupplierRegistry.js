@@ -1,9 +1,10 @@
 const { buildModule } = require("@nomicfoundation/hardhat-ignition/modules");
 
-module.exports = buildModule("LockModule", (m) => {
+module.exports = buildModule("SupplierRegistryModule", (m) => {
   // Get the first configured account as owner
   const owner = m.getAccount(0);
-
+ 
+  
   // Deploy the contract (add constructor args if needed)
   const supplierRegistry = m.contract("SupplierRegistry" /*, constructorArgs */);
 

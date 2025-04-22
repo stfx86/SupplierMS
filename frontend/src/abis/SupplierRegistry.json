@@ -3,7 +3,7 @@
   "contractName": "SupplierRegistry",
   "sourceName": "contracts/SupplierRegistry.sol",
   "abi": [
-    {
+  {
       "inputs": [],
       "stateMutability": "nonpayable",
       "type": "constructor"
