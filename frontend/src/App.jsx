@@ -4,6 +4,7 @@ import './App.css'
 import SupplierForm from './components/SupplierForm';
 import ConnectWallet from './components/ConnectWallet';
 import Navbar from "./components/Navbar";
+import Navbar2 from './components/Navbar2';
 import { useWallet } from './contexts/WalletContext';
 
 import { useState ,React } from 'react'

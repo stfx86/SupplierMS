@@ -119,3 +119,46 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
+/////
+
+// import React from 'react';
+// import { Container, Card, Form, Button } from 'react-bootstrap';
+
+// const ContractInterface = () => {
+//   return (
+//     <Container className="mt-5">
+//       <Card className="shadow p-4">
+//         <h3 className="mb-3">Contract: 0xABC...123</h3>
+
+//         {/* Function: view function */}
+//         <Form className="mb-4">
+//           <h5>getOwner()</h5>
+//           <Button variant="info" type="submit">Call</Button>
+//         </Form>
+
+//         {/* Function: write function with input */}
+//         <Form className="mb-4">
+//           <h5>setMessage(string)</h5>
+//           <Form.Control type="text" placeholder="Enter new message" className="mb-2" />
+//           <Button variant="primary" type="submit">Write</Button>
+//         </Form>cd
+
+//         {/* Function: write function with multiple params */}
+//         <Form className="mb-4">
+//           <h5>transfer(address to, uint amount)</h5>
+//           <Form.Control type="text" placeholder="Recipient Address" className="mb-2" />
+//           <Form.Control type="number" placeholder="Amount" className="mb-2" />
+//           <Button variant="primary" type="submit">Send</Button>
+//         </Form>
+//       </Card>
+//     </Container>
+//   );
+// };
+
+// export default ContractInterface;
