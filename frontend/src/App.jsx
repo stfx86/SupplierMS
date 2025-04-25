@@ -1,43 +1,29 @@
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-import './App.css'
-import SupplierForm from './components/SupplierForm';
-import ConnectWallet from './components/ConnectWallet';
-import Navbar from "./components/Navbar";
-import Navbar2 from './components/Navbar2';
-import { useWallet } from './contexts/WalletContext';
 
-import { useState ,React } from 'react'
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import  About  from './components/About';
+import Layout from "./components/Layout";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 function App() {
- 
-  // const [signer, setSigner] = useState(null);
-  const { signer } = useWallet();
-
 
   return (
     <Router>
 
-      <Navbar2 className="navbar" />
-      <div >
-      <ConnectWallet />
-      {signer && <p>You can now register as a supplier ✅</p>}
-    </div>
 
-      <main >
+      <Layout>
+
         <Routes>
-          <Route path="/" element={<h2>Home Page</h2>} />
-          <Route path="/suppliers" element={<h2>Suppliers Page</h2>} />
-          <Route path="/bout" element={<About/>} />
-          <Route path="/RegisterSupplier" element={<SupplierForm/>} />
+          <Route path="/" element={<h2>jjdjd</h2>} />
+          <Route />
+          <Route />
+
+
         </Routes>
-      </main>
+      </Layout>
     </Router>
-  );
+
+
+  )
+
 }
 
 export default App;
-//metamask password
-//       wertfghsdfg345678iop 
+

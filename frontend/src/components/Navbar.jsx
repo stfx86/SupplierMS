@@ -1,19 +1,44 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/Navbar.css";
 
 function Navbar() {
-  return (
-    <nav className="navbar">
-      {/* <h1 className="navbar-title">SupplierMS</h1> */}
-      <ul className="navbar-links">
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/suppliers"> Suppliers </Link></li>
-        <li><Link to="/about">About</Link></li>
-        <li><Link to="/RegisterSupplier">RegisterSupplier</Link></li>
-      </ul>
-    </nav>
-  );    
-}
 
+    return (
+
+        <nav className="bg-marketplace-bg-dark border-b border-gray-800 py-4 px-6 sticky top-0 z-50 ">
+            <div className="flex justify-between items-center mx-auto max-w-7xl">
+                {/* Logo */}
+                <Link to="/" className="flex items-center">
+                    <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">DIGITAL NEXUS </span>
+                </Link>
+
+                {/* Desktop Navigation */}
+                <div className="hidden md:flex items-center space-x-6">
+                    <Link to="/" className="text-white hover:text-blue-400 px-3 py-2 transition">
+                        Home
+                    </Link>
+                    <Link to="/browse-suppliers" className="text-white hover:text-blue-400 px-3 py-2 transition">
+                        Browse Suppliers
+                    </Link>
+                    <Link to="/buyer-transactions" className="text-white hover:text-blue-400 px-3 py-2 transition">
+                        My Transactions
+                    </Link>
+                    <Link to="/supplier-dashboard" className="text-white hover:text-blue-400 px-3 py-2 transition">
+                        Supplier Dashboard
+                    </Link>
+                    <Link to="/supplier-registry" className="text-white hover:text-blue-400 px-3 py-2 transition">
+                        Register as Supplier
+                    </Link>
+                </div>
+
+
+            </div>
+
+        </nav>
+
+
+
+    )
+
+    c
+}
 export default Navbar;
