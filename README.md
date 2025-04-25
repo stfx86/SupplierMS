@@ -19,6 +19,9 @@ wallet only for authentication ?
 </>
 
 
+<q>
+is verified??
+</>
 
 
 
@@ -30,11 +33,17 @@ legality?
 
 
 
+
 <q>
 supplier attributs?
 
 
 </>
+
+
+
+
+
 
 
 

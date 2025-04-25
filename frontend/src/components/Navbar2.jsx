@@ -7,9 +7,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/Navbar.css";
-
-
-
+import { Nav ,Navbar ,Container } from "react-bootstrap";
 
 
 function App() {
@@ -24,28 +22,16 @@ function App() {
           <Navbar.Toggle aria-controls="navbar-login" />
           <Navbar.Collapse id="navbar-login">
             <Nav className="me-auto">
-              <Nav.Link href="home" className="px-3">Home</Nav.Link>
-              <Nav.Link href="about" className="px-3">About</Nav.Link>
-              <Nav.Link href="contact" className="px-3">Contact</Nav.Link>
+              <Nav.Link as={Link}  to="/" className="px-3">Home</Nav.Link>
+              <Nav.Link to="about" as={Link}  className="px-3">About</Nav.Link>
+              <Nav.Link to="contact" as={Link}  className="px-3">Contact</Nav.Link>
+              <Nav.Link to="RegisterSupplier" as={Link} className="px-3">RegisterSupplier</Nav.Link>
             </Nav>
-
-            <Form className="d-flex align-items-center gap-2">
-              <FormControl
-                type="email"
-                placeholder="Email"
-                aria-label="Email"
-              />
-              <FormControl
-                type="password"
-                placeholder="Password"
-                aria-label="Password"
-              />
-              <Button variant="primary">Login</Button>
-            </Form>
           </Navbar.Collapse>
         </Container>
       </Navbar>
       </>
   )};
+
 
   export default App;

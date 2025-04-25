@@ -9,7 +9,7 @@ module.exports = buildModule("SupplierRegistryModule", (m) => {
   const supplierRegistry = m.contract("SupplierRegistry" /*, constructorArgs */);
 
   // Register supplier (as a separate transaction)
-  m.call(supplierRegistry, "registerSupplier", ["hhsh", "oo@oo", "99992289"]);
+  m.call(supplierRegistry, "registerSupplier", ["hhwwwwsh", "oo@oo", "99992289"]);
 
   return { supplierRegistry };
 });

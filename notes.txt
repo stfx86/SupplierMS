@@ -1,0 +1,14 @@
+
+
+struct Supplier {
+
+        string name;
+        string serviceType;
+        string email; // Consider hashing for privacy
+        address walletAddress;
+        bool isVerified;
+        uint registrationDate;
+        string ipfsHash; // For off-chain data (certificates, etc.)
+        
+    }
+    

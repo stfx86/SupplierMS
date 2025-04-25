@@ -20,7 +20,7 @@ function App() {
   return (
     <Router>
 
-      <Navbar className="navbar" />
+      <Navbar2 className="navbar" />
       <div >
       <ConnectWallet />
       {signer && <p>You can now register as a supplier ✅</p>}
@@ -30,7 +30,7 @@ function App() {
         <Routes>
           <Route path="/" element={<h2>Home Page</h2>} />
           <Route path="/suppliers" element={<h2>Suppliers Page</h2>} />
-          <Route path="/about" element={<About/>} />
+          <Route path="/bout" element={<About/>} />
           <Route path="/RegisterSupplier" element={<SupplierForm/>} />
         </Routes>
       </main>
