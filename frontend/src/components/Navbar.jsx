@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ConnectWalletButton from './ConnectWalletButton'
 
 function Navbar() {
 
@@ -28,6 +29,11 @@ function Navbar() {
                     <Link to="/supplier-registry" className="text-white hover:text-blue-400 px-3 py-2 transition">
                         Register as Supplier
                     </Link>
+                </div>
+
+                {/* Wallet Connection */}
+                <div className="hidden md:block">
+                    <ConnectWalletButton />
                 </div>
 
 
