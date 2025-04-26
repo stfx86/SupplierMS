@@ -1,6 +1,8 @@
 
 import Layout from "./components/Layout";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+// import { Form } from "react-router-dom";
+import Form from './components/Form'
 
 function App() {
 
@@ -12,7 +14,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<h2>jjdjd</h2>} />
-          <Route />
+          <Route path="/supplier-registry" element={<Form/>}/>
           <Route />
 
 
