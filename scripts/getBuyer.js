@@ -33,7 +33,7 @@ async function verifyBuyer() {
         }
 
         // Replace this address with the buyer you want to query
-        const buyerAddress = '0x1CBd3b2770909D4e10f157cABC84C7264073C9Ec';
+        const buyerAddress = '0xbDA5747bFD65F08deb54cb465eB87D40e51B197E';
 
         const buyer = await buyerRegistry.getBuyer(buyerAddress);
 
