@@ -29,25 +29,25 @@ exports.registerSupplier = (req, res) => {
    
   
     // Check if files exist
-    if (!logoFile || !bioFile) {
-      return res.status(400).json({ error: "Missing required files." });
-    }
+    // if (!logoFile || !bioFile) {
+    //   return res.status(400).json({ error: "Missing required files." });
+    // }
   
     // Access file paths safely
-    const logoPath = logoFile[0].path; // Array because of `maxCount: 1`
-    const bioPath = bioFile[0].path;
+    // const logoPath = logoFile[0].path; // Array because of `maxCount: 1`
+    // const bioPath = bioFile[0].path;
   
-    console.log("Logo Path:", logoPath);
-    console.log("Bio Path:", bioPath);
+    // console.log("Logo Path:", logoPath);
+    // console.log("Bio Path:", bioPath);
     ////
 
-    console.log(req.files);
-    console.log(req.body);
+    // console.log(req.files);
+    // console.log(req.body);
 
 
 
-    const logoBase64 = fs.readFileSync(logoFile.path, "base64");
-    const bioBase64 = fs.readFileSync(bioFile.path, "base64");
+    const logoBase64 = logoFile ?(fs.readFileSync(logoFile.path, "base64")):(null);
+    const bioBase64 = logoFile ? (fs.readFileSync(bioFile.path, "base64")):(null);
 
     const structuredData = {
       name,
@@ -75,3 +75,5 @@ exports.registerSupplier = (req, res) => {
     res.status(500).json({ success: false, error: "Failed to verify signature." });
   }
 };
+
+

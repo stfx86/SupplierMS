@@ -12,12 +12,27 @@ async function main() {
     serviceType: "Consulting",
   };
 
-  const message = JSON.stringify(data);
+  // const message = JSON.stringify(data);
+  const message =canonicalize(data);
   const hash = keccak256(toUtf8Bytes(message));
   const signature = await wallet.signMessage(hash);
   console.log("\nSignature:", signature);
+  ////
 
-  const recoveredAddress = ethers.verifyMessage(hash, signature);
+  const data2 = {
+    email: "alice@example.com",
+    name: "Alice",
+    serviceType: "Consulting"
+    
+    
+  };
+
+  // const message2 = JSON.stringify(data2);
+  const message2=canonicalize(data2);
+  const hash2 = keccak256(toUtf8Bytes(message2));
+  ////
+
+  const recoveredAddress = ethers.verifyMessage(hash2, signature);
   console.log("\nRecovered signer:", recoveredAddress);
   console.log("\nSignature valid?", recoveredAddress === wallet.address);
 }
@@ -28,3 +43,16 @@ main()
     console.error("❌ Test script failed:", err);
     process.exit(1);
   });
+
+
+
+function canonicalize(obj) {
+  return JSON.stringify(
+    Object.keys(obj)
+      .sort()
+      .reduce((acc, key) => {
+        acc[key] = obj[key];
+        return acc;
+      }, {})
+  );
+}

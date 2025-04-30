@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ethers, N } from "ethers";
+import { ethers } from "ethers";
 
 export default function SupplierForm() {
   const [formData, setFormData] = useState({
@@ -40,14 +40,32 @@ export default function SupplierForm() {
 /////////////
 
 
+// const fileToBase64 = (file) => {
+//   return new Promise((resolve, reject) => {
+//     const reader = new FileReader();
+//     reader.onload = () => resolve(reader.result);
+//     reader.onerror = reject;
+//     reader.readAsDataURL(file);
+//   });
+// };
+
+
 const fileToBase64 = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
+    reader.onload = () => {
+      const result = reader.result;
+      // Strip the prefix: "data:*;base64,"
+      const base64 = result.split(",")[1];
+      resolve(base64);
+    };
     reader.onerror = reject;
     reader.readAsDataURL(file);
   });
 };
+
+
+
 
 
 /////////////
@@ -66,8 +84,25 @@ const bioBase64 = formData.bioFile ? await fileToBase64(formData.bioFile) : null
     bioFile: bioBase64,
   };
 
-  const message = JSON.stringify(payloadToSign);
+
+
+function canonicalize(obj) {
+  return JSON.stringify(
+    Object.keys(obj)
+      .sort()
+      .reduce((acc, key) => {
+        acc[key] = obj[key];
+        return acc;
+      }, {})
+  );
+}
+
+    const message =canonicalize(payloadToSign);
+    console.log("F_canonicalize(data);",message);
+  // const message = JSON.stringify(payloadToSign);
   const messageHash = ethers.keccak256(ethers.toUtf8Bytes(message));
+  console.log("messageHash: ",messageHash);
+  
   //
 
   if (!window.ethereum) {
@@ -85,8 +120,7 @@ const bioBase64 = formData.bioFile ? await fileToBase64(formData.bioFile) : null
 
 
 
-  // const wallet = new ethers.Wallet(privateKey); // Replace with your method
-  // const signature = await wallet.signMessage(messageHash);
+
 
   // Build FormData
   const form = new FormData();
@@ -104,7 +138,7 @@ const bioBase64 = formData.bioFile ? await fileToBase64(formData.bioFile) : null
 
   try {
     // const response = await fetch("/api/register", {
-      const response = await fetch(" http://localhost:3000/api/suppliers/register", {
+      const response = await fetch("http://localhost:3000/api/suppliers/register", {
 
       method: "POST",
       body:form,
@@ -160,7 +194,7 @@ const bioBase64 = formData.bioFile ? await fileToBase64(formData.bioFile) : null
       </div>
 
       <div>
-        <label className="block text-lg font-semibold mb-2">Email Address</label>
+        <label className="block text-lg font-semibold mb-2"> Email Address</label>
         <input
           type="email"
           name="email"
