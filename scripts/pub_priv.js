@@ -3,13 +3,14 @@ const eccrypto = require('eccrypto');
 async function testEncryption() {
     try {
         // Your test keys (remove 0x prefix for eccrypto)
-        const privateKey = Buffer.from('0a3b20017d630888cd656caffdbfa69e663649db68e0e11ed46fbc68af6a022f', 'hex');
-        const publicKey = Buffer.from('0465d16fa32d68e1e3e941dbfdc4bc3c338f8b454a830cce9663d5721ea3f6f4ab1c52d17aa97db8451622b0172e278d761e171bedc7d7a9b7963806f082adc6af', 'hex');
+        const privateKey = Buffer.from('031d893578c7508e824ef3fed9fe58eb1338724b0459ae1e532b7d98d7568c02', 'hex');
+        const publicKey = Buffer.from('04ab62568c27a5dfe2c7a330ce383e6f1ba687a405c5519a4ce08f8bdf043513337b6379b364b39086942aee2f5989ee7fbc5d4ee2ce07413f4aa16d29d8c3af65', 'hex');
 
         // Encrypt
         const msg = "rrrrrrSecret message";
         const encrypted = await eccrypto.encrypt(publicKey, Buffer.from(msg));
-        console.log("Encrypted:", {
+        // console.log(encrypted.ciphertext.toString('hex'));
+                console.log("Encrypted:", {
             iv: encrypted.iv.toString('hex'),
                     ciphertext: encrypted.ciphertext.toString('hex'),
                     ephemPublicKey: encrypted.ephemPublicKey.toString('hex'),
@@ -25,6 +26,7 @@ async function testEncryption() {
 }
 
 testEncryption();
+
 
 
 

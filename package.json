@@ -11,6 +11,8 @@
     "bootstrap": "^5.3.5",
     "dotenv": "^16.5.0",
     "eccrypto": "^1.1.6",
+    "eciesjs": "^0.4.14",
+    "ethers": "^6.13.7",
     "express": "^5.1.0",
     "lucide-react": "^0.503.0",
     "pinata": "^2.2.1",

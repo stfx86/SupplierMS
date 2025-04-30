@@ -4,8 +4,8 @@ import ConnectWalletButton from './ConnectWalletButton'
 function Navbar() {
 
     return (
-
-        <nav className="bg-marketplace-bg-dark border-b border-gray-800 py-4 px-6 sticky top-0 z-50 ">
+///  backdrop-blur-md 
+        <nav className=" backdrop-blur-sm   bg-marketplace-bg-dark border-b border-gray-800  px-6 sticky top-0 z-50 ">
             <div className="flex justify-between items-center mx-auto max-w-7xl">
                 {/* Logo */}
                 <Link to="/" className="flex items-center">
@@ -26,7 +26,7 @@ function Navbar() {
                     <Link to="/supplier-dashboard" className="text-white hover:text-blue-400 px-3 py-2 transition">
                         Supplier Dashboard
                     </Link>
-                    <Link to="/supplier-registry" className="text-white hover:text-blue-400 px-3 py-2 transition">
+                    <Link to="/register" className="text-white hover:text-blue-400 px-3 py-2 transition">
                         Register as Supplier
                     </Link>
                 </div>

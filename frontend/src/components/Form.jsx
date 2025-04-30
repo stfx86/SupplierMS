@@ -1,9 +1,5 @@
-
-
-
-
-
 import { useState } from "react";
+import { ethers, N } from "ethers";
 
 export default function SupplierForm() {
   const [formData, setFormData] = useState({
@@ -15,7 +11,7 @@ export default function SupplierForm() {
     categories: "",
     website: "",
     logoFile: null,
-    profileFile: null,
+    bioFile: null,
     socials: [],
   });
 
@@ -41,10 +37,91 @@ export default function SupplierForm() {
       setSocialInput({ platform: "Twitter", url: "" });
     }
   };
+/////////////
 
+
+const fileToBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+};
+
+
+/////////////
+
+  // handline submit 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Final Form Data:", formData);
+
+  // Prepare signature
+  const logoBase64 = formData.logoFile ? await fileToBase64(formData.logoFile) : null;
+const bioBase64 = formData.bioFile ? await fileToBase64(formData.bioFile) : null;
+
+  const payloadToSign = {
+    ...formData,
+    logoFile: logoBase64,
+    bioFile: bioBase64,
+  };
+
+  const message = JSON.stringify(payloadToSign);
+  const messageHash = ethers.keccak256(ethers.toUtf8Bytes(message));
+  //
+
+  if (!window.ethereum) {
+    throw new Error("MetaMask is not installed");
+  } 
+
+   // Ask user to connect wallet
+   await window.ethereum.request({ method: "eth_requestAccounts" });
+
+   const provider = new ethers.BrowserProvider(window.ethereum); // Ethers v6
+   const signer = await provider.getSigner();
+ 
+   // Sign message (will prompt MetaMask)
+   const signature = await signer.signMessage(messageHash);
+
+
+
+  // const wallet = new ethers.Wallet(privateKey); // Replace with your method
+  // const signature = await wallet.signMessage(messageHash);
+
+  // Build FormData
+  const form = new FormData();
+  form.append("signature", signature);
+  form.append("name", formData.name);
+  form.append("email", formData.email);
+  form.append("serviceType", formData.serviceType);
+  form.append("companyName", formData.companyName);
+  form.append("country", formData.country);
+  form.append("categories", formData.categories);
+  form.append("website", formData.website);
+  form.append("logoFile", formData.logoFile);
+  form.append("bioFile", formData.bioFile);
+  form.append("socials", JSON.stringify(formData.socials)); // serialize array
+
+  try {
+    // const response = await fetch("/api/register", {
+      const response = await fetch(" http://localhost:3000/api/suppliers/register", {
+
+      method: "POST",
+      body:form,
+    });
+    
+    if (response.ok) {
+      const result = await response.json();
+      console.log("Submitted successfully:", result);
+    } else {
+      const errorText = await response.text();
+      console.error("Error response:", errorText);
+    }
+    
+  } 
+  catch (err) {
+    console.error("Submission error:", err);
+  }
   };
 
   return (
@@ -181,7 +258,7 @@ export default function SupplierForm() {
       </div>
 
       <div>
-        <label className="block text-lg font-semibold mb-2">Logo (IPFS Image)</label>
+        <label className="block text-lg font-semibold mb-2">Logo (Image)</label>
         <input
           type="file"
           name="logoFile"
@@ -192,10 +269,10 @@ export default function SupplierForm() {
       </div>
 
       <div>
-        <label className="block text-lg font-semibold mb-2">Profile Bio (IPFS JSON)</label>
+        <label className="block text-lg font-semibold mb-2">Profile Bio (JSON)</label>
         <input
           type="file"
-          name="profileFile"
+          name="bioFile"
           accept=".json"
           onChange={handleChange}
           className="w-full text-white"

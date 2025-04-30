@@ -83,11 +83,14 @@ export const WalletProvider = ({ children }) => {
             }
             await tx.wait();
             console.log('[DEBUG] Transaction confirmed.');
+           
             setIsRegistered(true);
             setShowPassphraseInput(false);
             setPassphrase('');
             setMessage({ type: 'success', text: isRegistered ? 'Public key updated successfully!' : 'Wallet registered successfully!' });
             setTimeout(() => setMessage(null), 3000);
+            console.log("THE DERIVED PUBLIC KEY : "+ derivedPubKey);
+            console.log("THE DERIVED PRIVATE  KEY : "+derivedPrivKey);
         } catch (err) {
             console.error('[ERROR] handlePassphraseSubmit:', err.message);
             setMessage({ type: 'error', text: 'Registration failed.' });

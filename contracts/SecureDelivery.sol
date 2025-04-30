@@ -1,74 +1,96 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
-
+pragma solidity ^0.8.28;
 
 contract SecureDelivery {
-    
-    address public buyer;
-    address payable public supplier;
-    uint public amount;
-    bool public deliveryConfirmed;
-    uint public deadline;
 
-    string public itemDescription;
-    bytes public encryptedCID;  // encrypted with buyer's pubkey
-    bytes public encryptedKey;  // AES key encrypted with buyer's pubkey
-
-    event AssetReady(bytes encryptedCID);
-    event KeyReleased(bytes encryptedKey);
-    event PaymentReleased();
-
-    constructor(address payable _supplier, string memory _itemDescription) payable {
-        buyer = msg.sender;
-        supplier = _supplier;
-        amount = msg.value;
-        itemDescription = _itemDescription;
-        deadline = block.timestamp + 3 days;
+    // Struct to store transaction details
+    struct Transaction {
+        address buyer;
+        address payable supplier;
+        uint amount;
+        bool deliveryConfirmed;
+        uint deadline;
+        uint itemId;  // Item ID for tracking the item
+        bytes encryptedCID;  // encrypted with buyer's pubkey
+        bytes encryptedKey;  // AES key encrypted with buyer's pubkey
     }
 
-    modifier onlyBuyer() {
-        require(msg.sender == buyer, "Only buyer can call this");
+    mapping(uint => Transaction) public transactions;
+    uint public nextTransactionId;
+
+    event AssetReady(uint transactionId, bytes encryptedCID);
+    event KeyReleased(uint transactionId, bytes encryptedKey);
+    event PaymentReleased(uint transactionId);
+
+    modifier onlyBuyer(uint transactionId) {
+        require(msg.sender == transactions[transactionId].buyer, "Only buyer can call this");
         _;
     }
 
-    modifier onlySupplier() {
-        require(msg.sender == supplier, "Only supplier can call this");
+    modifier onlySupplier(uint transactionId) {
+        require(msg.sender == transactions[transactionId].supplier, "Only supplier can call this");
         _;
     }
 
-    function setEncryptedCID(bytes memory _encryptedCID) public onlySupplier {
-        encryptedCID = _encryptedCID;
-        emit AssetReady(_encryptedCID);
+    modifier transactionExists(uint transactionId) {
+        require(transactions[transactionId].buyer != address(0), "Transaction does not exist");
+        _;
     }
 
-    function confirmDelivery() public onlyBuyer {
-        require(!deliveryConfirmed, "Already confirmed");
-        deliveryConfirmed = true;
+    // Function to create a new transaction
+    function createTransaction(address payable _supplier, uint _itemId) external payable {
+        uint transactionId = nextTransactionId++;
+        uint deadline = block.timestamp + 3 days;
+
+        transactions[transactionId] = Transaction({
+            buyer: msg.sender,
+            supplier: _supplier,
+            amount: msg.value,
+            deliveryConfirmed: false,
+            deadline: deadline,
+            itemId: _itemId,
+            encryptedCID: "",
+            encryptedKey: ""
+        });
     }
 
-    function releaseKeyAndPayment(bytes memory _encryptedKey) public onlySupplier {
-        require(deliveryConfirmed, "Delivery not confirmed");
-        encryptedKey = _encryptedKey;
+    // Function to set encrypted CID (called by supplier)
+    function setEncryptedCID(uint transactionId, bytes memory _encryptedCID) public onlySupplier(transactionId) transactionExists(transactionId) {
+        transactions[transactionId].encryptedCID = _encryptedCID;
+        emit AssetReady(transactionId, _encryptedCID);
+    }
 
-        emit KeyReleased(_encryptedKey);
+    // Function for buyer to confirm delivery
+    function confirmDelivery(uint transactionId) public onlyBuyer(transactionId) transactionExists(transactionId) {
+        require(!transactions[transactionId].deliveryConfirmed, "Already confirmed");
+        transactions[transactionId].deliveryConfirmed = true;
+    }
 
-        (bool sent, ) = supplier.call{value: amount}("");
+    // Function to release the key and payment (called by supplier)
+    function releaseKeyAndPayment(uint transactionId, bytes memory _encryptedKey) public onlySupplier(transactionId) transactionExists(transactionId) {
+        require(transactions[transactionId].deliveryConfirmed, "Delivery not confirmed");
+        transactions[transactionId].encryptedKey = _encryptedKey;
+
+        emit KeyReleased(transactionId, _encryptedKey);
+
+        (bool sent, ) = transactions[transactionId].supplier.call{value: transactions[transactionId].amount}("");
         require(sent, "Payment failed");
 
-        emit PaymentReleased();
+        emit PaymentReleased(transactionId);
     }
 
-    function forceReleaseAfterTimeout(bytes memory _encryptedKey) public onlySupplier {
-        require(block.timestamp >= deadline, "Deadline not reached");
-        require(!deliveryConfirmed, "Already confirmed");
+    // Function to force release payment and key after deadline
+    function forceReleaseAfterTimeout(uint transactionId, bytes memory _encryptedKey) public onlySupplier(transactionId) transactionExists(transactionId) {
+        require(block.timestamp >= transactions[transactionId].deadline, "Deadline not reached");
+        require(!transactions[transactionId].deliveryConfirmed, "Already confirmed");
 
-        encryptedKey = _encryptedKey;
+        transactions[transactionId].encryptedKey = _encryptedKey;
 
-        emit KeyReleased(_encryptedKey);
+        emit KeyReleased(transactionId, _encryptedKey);
 
-        (bool sent, ) = supplier.call{value: amount}("");
+        (bool sent, ) = transactions[transactionId].supplier.call{value: transactions[transactionId].amount}("");
         require(sent, "Payment failed");
 
-        emit PaymentReleased();
+        emit PaymentReleased(transactionId);
     }
 }
