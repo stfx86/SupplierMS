@@ -1,28 +1,24 @@
 const { ethers } = require("ethers");
 
 function verifySupplierSignature(data, signature) {
-
-
-  console.log("canonicalize(data); ");
+  console.log("Verifying signature for data: ", data);
   const message = canonicalize(data);
-  console.log(message);
+  console.log("Canonicalized data : ", message);
   
-  
-  const hash = ethers.keccak256(ethers.toUtf8Bytes(message));
-  console.log( "back_hash: "+ hash);
-  
-  const signer = ethers.verifyMessage(hash, signature); // Not verifyMessage
-  // const signer = ethers.verifyMessage(message, signature); // Not verifyMessage
-  console.log("singer from verifySignature  :",signer);
-  
-
-  return signer;
+  try {
+    const messageHash = ethers.keccak256(ethers.toUtf8Bytes(message));
+    console.log("hash of the data: ",messageHash);
+    
+    const signer = ethers.verifyMessage(messageHash, signature);
+    console.log("Recovered signer:", signer);
+    return signer;
+  } catch (error) {
+    console.error("Signature verification failed:", error);
+    throw error;
+  }
 }
 
 module.exports = verifySupplierSignature;
-
-
-
 
 function canonicalize(obj) {
   return JSON.stringify(

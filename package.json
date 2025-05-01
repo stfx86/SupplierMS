@@ -14,6 +14,7 @@
     "eciesjs": "^0.4.14",
     "ethers": "^6.13.7",
     "express": "^5.1.0",
+    "heroicons": "^2.2.0",
     "lucide-react": "^0.503.0",
     "pinata": "^2.2.1",
     "react-bootstrap": "^2.10.9",

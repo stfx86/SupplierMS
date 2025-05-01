@@ -10,7 +10,6 @@ console.log(Supplier);
 
 
 
-
     
 }
 

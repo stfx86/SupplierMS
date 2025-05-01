@@ -19,7 +19,7 @@ export default function SupplierForm() {
   });
 
   const [socialInput, setSocialInput] = useState({ platform: "Twitter", url: "" });
-  const {signer ,  isConnected, walletAddress,}= useWallet(); 
+  const {signer ,  isConnected, walletAddress }= useWallet(); 
 
   const socialOptions = ["Twitter", "LinkedIn", "GitHub", "Discord", "Telegram"];
 
@@ -83,6 +83,8 @@ const fileToBase64 = (file) => {
       
       return;
     }
+
+
     
     
 
@@ -93,11 +95,16 @@ const fileToBase64 = (file) => {
   const logoBase64 = formData.logoFile ? await fileToBase64(formData.logoFile) : null;
 const bioBase64 = formData.bioFile ? await fileToBase64(formData.bioFile) : null;
 
+const timestamp = String(Date.now());   
   const payloadToSign = {
     ...formData,
     logoFile: logoBase64,
     bioFile: bioBase64,
+    walletAddress: walletAddress.toLowerCase(),
+    timestamp,
   };
+  
+  // console.log("111=",walletAddress.toLowerCase());
 
 
 
@@ -116,24 +123,13 @@ function canonicalize(obj) {
 
     const message = canonicalize(payloadToSign);
     console.log("F_canonicalize(data);",message);
-  // const message = JSON.stringify(payloadToSign);
-  const messageHash = ethers.keccak256(ethers.toUtf8Bytes(message));
-  console.log("messageHash: ",messageHash);
-  
-  //
-
-  if (!window.ethereum) {
-    throw new Error("MetaMask is not installed");
-  } 
-
-   // Ask user to connect wallet
-  //  await window.ethereum.request({ method: "eth_requestAccounts" });
-
-  //  const provider = new ethers.BrowserProvider(window.ethereum); // Ethers v6
-  //  const signer = await provider.getSigner();
- 
-   // Sign message (will prompt MetaMask)
-   const signature = await signer.signMessage(messageHash);
+    const messageHash = ethers.keccak256(ethers.toUtf8Bytes(message));
+    console.log("messageHash: ",messageHash);
+    
+    // Sign message (will prompt MetaMask)
+    const signature = await signer.signMessage(messageHash);
+    console.log("signature: ",signature);
+   
 
 
 
@@ -152,6 +148,8 @@ function canonicalize(obj) {
   form.append("logoFile", formData.logoFile);
   form.append("bioFile", formData.bioFile);
   form.append("socials", JSON.stringify(formData.socials)); // serialize array
+  form.append("walletAddress", walletAddress.toLowerCase());
+  form.append("timestamp", timestamp);
 
   try {
     // const response = await fetch("/api/register", {
