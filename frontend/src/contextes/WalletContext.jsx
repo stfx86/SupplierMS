@@ -9,13 +9,15 @@ const WalletContext = createContext();
 export const WalletProvider = ({ children }) => {
     const [isConnected, setIsConnected] = useState(false);
     const [walletAddress, setWalletAddress] = useState('');
-    const [BuyerRegistryAddress] = useState('0x5FbDB2315678afecb367f032d93F642f64180aa3');//i added this manuly
+    const [BuyerRegistryAddress] = useState('0x5FbDB2315678afecb367f032d93F642f64180aa3'); //
     const [message, setMessage] = useState(null);
     const [showPassphraseInput, setShowPassphraseInput] = useState(false);
     const [passphrase, setPassphrase] = useState('');
     const [isRegistered, setIsRegistered] = useState(false);
     const [signer, setSigner] = useState(null);  // Add signer state
-1
+    const [contract] =useState(new ethers.Contract(BuyerRegistryAddress, BuyerRegistryABI, provider));
+
+
     const connectWallet = async () => {
         try {
             if (!window.ethereum) throw new Error('MetaMask not detected.');
@@ -81,6 +83,8 @@ export const WalletProvider = ({ children }) => {
                 tx = await registryContract.registerBuyer(derivedPubKey);
                 console.log('[DEBUG] registerBuyer TX Hash:', tx.hash);
             }
+
+            
             await tx.wait();
             console.log('[DEBUG] Transaction confirmed.');
            

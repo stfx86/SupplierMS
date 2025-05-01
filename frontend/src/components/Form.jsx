@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { ethers } from "ethers";
+import { useWallet } from '../contextes/WalletContext.jsx'; 
+import toast from "react-hot-toast";
 
 export default function SupplierForm() {
+  
   const [formData, setFormData] = useState({
     name: "",
     serviceType: "",
@@ -16,6 +19,7 @@ export default function SupplierForm() {
   });
 
   const [socialInput, setSocialInput] = useState({ platform: "Twitter", url: "" });
+  const {signer ,  isConnected, walletAddress,}= useWallet(); 
 
   const socialOptions = ["Twitter", "LinkedIn", "GitHub", "Discord", "Telegram"];
 
@@ -74,6 +78,17 @@ const fileToBase64 = (file) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!isConnected) {
+      toast.error(" ! Please connect your wallet first.");
+      
+      return;
+    }
+    
+    
+
+
+
+
   // Prepare signature
   const logoBase64 = formData.logoFile ? await fileToBase64(formData.logoFile) : null;
 const bioBase64 = formData.bioFile ? await fileToBase64(formData.bioFile) : null;
@@ -97,7 +112,9 @@ function canonicalize(obj) {
   );
 }
 
-    const message =canonicalize(payloadToSign);
+
+
+    const message = canonicalize(payloadToSign);
     console.log("F_canonicalize(data);",message);
   // const message = JSON.stringify(payloadToSign);
   const messageHash = ethers.keccak256(ethers.toUtf8Bytes(message));
@@ -110,10 +127,10 @@ function canonicalize(obj) {
   } 
 
    // Ask user to connect wallet
-   await window.ethereum.request({ method: "eth_requestAccounts" });
+  //  await window.ethereum.request({ method: "eth_requestAccounts" });
 
-   const provider = new ethers.BrowserProvider(window.ethereum); // Ethers v6
-   const signer = await provider.getSigner();
+  //  const provider = new ethers.BrowserProvider(window.ethereum); // Ethers v6
+  //  const signer = await provider.getSigner();
  
    // Sign message (will prompt MetaMask)
    const signature = await signer.signMessage(messageHash);
@@ -146,6 +163,7 @@ function canonicalize(obj) {
     
     if (response.ok) {
       const result = await response.json();
+      toast.success("Supplier registered successfully!");
       console.log("Submitted successfully:", result);
     } else {
       const errorText = await response.text();

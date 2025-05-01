@@ -1,7 +1,7 @@
 import React from 'react';
 import { Wallet as WalletIcon } from 'lucide-react';
 import { useWallet } from '../contextes/WalletContext.jsx';  // Use the custom hook to access the context
-import { ethers, ZeroAddress } from 'ethers';
+
 
 export default function ConnectWalletButton() {
 
@@ -44,6 +44,7 @@ export default function ConnectWalletButton() {
       </div>
       </div>
     )}
+    
 
     {isConnected ? (
       <div className="flex flex-col gap-2 items-center">

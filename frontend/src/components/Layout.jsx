@@ -1,5 +1,8 @@
 
 import Navbar from "./Navbar";
+import { Toaster } from "react-hot-toast";
+
+
 export default function({children}){
 
     return (
@@ -8,6 +11,18 @@ export default function({children}){
           <main className="flex-grow">
             {children}
           </main>
+          <Toaster
+        position="top-center"
+        reverseOrder={false}
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: "#333",
+            color: "#fff",
+            fontSize: "16px",
+          },
+        }}
+      />
           <footer className="py-6 border-t border-gray-800">
             <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
               <p>&copy; {new Date().getFullYear()} Digital Item Nexus. All rights reserved.</p>

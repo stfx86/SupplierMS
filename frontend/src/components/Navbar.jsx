@@ -45,6 +45,5 @@ function Navbar() {
 
     )
 
-    c
 }
 export default Navbar;

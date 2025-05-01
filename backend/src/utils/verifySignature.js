@@ -2,7 +2,7 @@ const { ethers } = require("ethers");
 
 function verifySupplierSignature(data, signature) {
 
-  email: "alice@example.com",
+
   console.log("canonicalize(data); ");
   const message = canonicalize(data);
   console.log(message);
