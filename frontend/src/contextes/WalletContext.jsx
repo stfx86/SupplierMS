@@ -30,6 +30,7 @@ export const WalletProvider = ({ children }) => {
             console.log('[DEBUG] Connected Wallet Address:', address);
             setWalletAddress(address);
             setSigner(signerObj);  // Store the signer
+            setProvider(provider);
             setIsConnected(true);
             await checkRegistration(address);
         } catch (err) {

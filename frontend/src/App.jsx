@@ -3,6 +3,7 @@ import Layout from "./components/Layout";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 // import { Form } from "react-router-dom";
 import Form from './components/Form'
+import Plat from './components/Plat'
 
 function App() {
 
@@ -13,7 +14,7 @@ function App() {
       <Layout>
 
         <Routes>
-          <Route path="/" element={<h2>jjdjd</h2>} />
+          <Route path="/" element={<Plat/>} />
           <Route path="/register" element={<Form/>}/>
           <Route />
 

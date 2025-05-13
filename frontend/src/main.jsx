@@ -9,7 +9,10 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
   <WalletProvider>
  
+
     <App />
+  
     </WalletProvider>
-  </StrictMode>,
+  </StrictMode>
 )
+
