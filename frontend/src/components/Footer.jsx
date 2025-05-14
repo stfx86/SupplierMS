@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-brand-navy text-white pt-12 pb-8">
-      <div className="container-custom">
+    <footer className="bg-brand-navy text-white pt-12 pb-8 ">
+      <div className="mx-24">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <h3 className="text-lg font-bold">DigitalGoods</h3>

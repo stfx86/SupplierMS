@@ -2,8 +2,11 @@ import React, { createContext, useContext, useState } from 'react';
 import { ethers, ZeroAddress } from 'ethers';
 import toast from "react-hot-toast";
 import { DocumentDuplicateIcon } from '@heroicons/react/24/outline'; // Heroicons (install if needed)
-import {abi  as BuyerRegistryABI } from '../../../artifacts/contracts/BuyerRegistry.sol/BuyerRegistry.json';
+import { useContractData } from './ContractContext';
+
+// import {abi  as BuyerRegistryABI } from '../../../artifacts/contracts/BuyerRegistry.sol/BuyerRegistry.json';
 //artifacts/contracts/BuyerRegistry.sol/BuyerRegistry.json
+
 // Create context
 const WalletContext = createContext();
 
@@ -11,13 +14,17 @@ const WalletContext = createContext();
 export const WalletProvider = ({ children }) => {
     const [isConnected, setIsConnected] = useState(false);
     const [walletAddress, setWalletAddress] = useState('');
-    const [BuyerRegistryAddress] = useState('0x5FbDB2315678afecb367f032d93F642f64180aa3'); //
+    // const [BuyerRegistryAddress] = useState('0x5FbDB2315678afecb367f032d93F642f64180aa3'); 
     const [message, setMessage] = useState(null);
     const [showPassphraseInput, setShowPassphraseInput] = useState(false);
     const [passphrase, setPassphrase] = useState('');
     const [isRegistered, setIsRegistered] = useState(false);
     const [signer, setSigner] = useState(null);  // Add signer state
     const [provider, setProvider] = useState(null);  // Add signer state
+    const { buyerRegistryData } = useContractData();
+
+    
+     
     // const [contract] =useState(new ethers.Contract(BuyerRegistryAddress, BuyerRegistryABI, provider));
 
 
@@ -52,12 +59,22 @@ export const WalletProvider = ({ children }) => {
     };
 
     const checkRegistration = async (address) => {
+
+
+      // console.log("BuyerRegistryData.address:",buyerRegistryData.address,"\n");
+      // console.log("BuyerRegistryData.abi:",buyerRegistryData.abi,"\n");
        
 
 
         try {
             const provider = new ethers.BrowserProvider(window.ethereum);
-            const registryContract = new ethers.Contract(BuyerRegistryAddress, BuyerRegistryABI, provider);
+            // const registryContract = new ethers.Contract(BuyerRegistryAddress, BuyerRegistryABI, provider);
+            //
+            
+            const registryContract = new ethers.Contract(buyerRegistryData.address, buyerRegistryData.abi, provider);
+           
+
+            //
             const buyer = await registryContract.getBuyer(address);
             console.log('[DEBUG] Buyer Data:', buyer);
             if (buyer.buyerAddress !== ZeroAddress) {
@@ -85,7 +102,7 @@ export const WalletProvider = ({ children }) => {
             const derivedWallet = new ethers.Wallet(derivedPrivKey);
             const derivedPubKey = derivedWallet.signingKey.publicKey;
 
-            const registryContract = new ethers.Contract(BuyerRegistryAddress, BuyerRegistryABI, signer);
+            const registryContract = new ethers.Contract(buyerRegistryData.address, buyerRegistryData.abi, signer);
             let tx;
             if (isRegistered) {
                 tx = await registryContract.updatePublicKey(derivedPubKey);
