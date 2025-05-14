@@ -1,7 +1,10 @@
 const fs = require("fs");
 const verifySignature = require("../utils/verifySignature");
+const { supplierRegistryData , getFirstSigner  } = require('../config/contracts');
+const { supplierExists } = require("./../utils/contractUtils");
 
-exports.registerSupplier = (req, res) => {
+
+exports.registerSupplier = async  (req, res) => {
   try {
     const {
       name,
@@ -89,7 +92,30 @@ console.log("walletAddress.toLowerCase(): ",walletAddress.toLowerCase());
       return res.status(401).json({ error: "Signature does not match wallet address." });
     }
 
+    // console.log(" supplierCotrolloer :", supplierRegistryData.abi,supplierRegistryData.address);
+
+    //getting hardhat first singer , 
+    console.log("hardhat firstSinger: ",(await getFirstSigner()).address);
+
+    console.log("supplier exist :",await supplierExists("0x0000000000000000000000000000000000000003"));
+
+    const exists = await supplierExists(walletAddress.toLowerCase());
+    if (exists) {
+      return res.status(409).json({
+        success: false,
+        error: "Supplier already exists.",
+      });
+    }
     
+    
+
+
+
+
+
+
+
+
 
 
 

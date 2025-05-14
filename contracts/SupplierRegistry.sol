@@ -11,12 +11,14 @@ contract SupplierRegistry {
         string website;
         string logoCID;            // IPFS image
         string profileCID;         // IPFS JSON with extended bio
+        mapping(string => string) socialLinks; // Mapping: platform => URL
+
+
         uint256 registrationDate;  // block.timestamp of registration
         bool isActive;             // toggled by admin/DAO
         uint256 txCount;           // completed transactions
         uint256 reputationScore;
         uint256 reviewCount;
-        mapping(string => string) socialLinks; // Mapping: platform => URL
     }
 
     mapping(address => Supplier) private suppliers;

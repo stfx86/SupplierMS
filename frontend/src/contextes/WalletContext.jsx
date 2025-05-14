@@ -68,6 +68,7 @@ export const WalletProvider = ({ children }) => {
 
         try {
             const provider = new ethers.BrowserProvider(window.ethereum);
+            
             // const registryContract = new ethers.Contract(BuyerRegistryAddress, BuyerRegistryABI, provider);
             //
             
