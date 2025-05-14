@@ -7,7 +7,9 @@ import Footer from "./Footer";
 export default function({children}){
 
     return (
-        <div className=" min-h-screen bg-[#1A1F2C]  text-[#ffffff] flex flex-col">
+        // <div className=" min-h-screen bg-[#1A1F2C]   flex flex-col">
+        <div className=" min-h-screen    flex flex-col">
+
           <Navbar />
           <main className="flex-grow">
             {children}

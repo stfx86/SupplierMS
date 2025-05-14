@@ -3,16 +3,21 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { WalletProvider } from './contextes/WalletContext';
+import { ContractProvider } from './contextes/ContractContext';
+
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-  <WalletProvider>
- 
+      <ContractProvider>
+    <WalletProvider>
 
-    <App />
-  
+
+        <App />
+
+
     </WalletProvider>
+      </ContractProvider>
   </StrictMode>
 )
 

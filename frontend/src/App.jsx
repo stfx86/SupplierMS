@@ -3,7 +3,10 @@ import Layout from "./components/Layout";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 // import { Form } from "react-router-dom";
 import Form from './components/Form'
-import Plat from './components/Plat'
+// import Plat from './components/Plat'
+import Index from "./pages/Index";
+// import Form2 from './components/Form2'
+
 
 function App() {
 
@@ -11,10 +14,13 @@ function App() {
     <Router>
 
 
+
       <Layout>
 
         <Routes>
-          <Route path="/" element={<Plat/>} />
+          {/* <Route path="/" element={<Plat/>} /> */}
+          <Route path="/" element={<Index/>} />
+
           <Route path="/register" element={<Form/>}/>
           <Route />
 

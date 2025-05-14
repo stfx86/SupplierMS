@@ -161,8 +161,7 @@ function canonicalize(obj) {
     
     if (response.ok) {
       const result = await response.json();
-      toast.success("Signature Verified! Supplier Request Submitted for Processing");
-
+      toast.success("Supplier registered successfully!");
       console.log("Submitted successfully:", result);
     } else {
       const errorText = await response.text();
