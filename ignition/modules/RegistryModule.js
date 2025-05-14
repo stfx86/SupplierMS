@@ -10,6 +10,9 @@ module.exports = buildModule("RegistryModule", (m) => {
       id: "alpha",
       addr: "0x0000000000000000000000000000000000000001",
       name: "Alpha Logistics",
+      companyName: "Alpha Logistics Inc.", // Added field
+      country: "USA",                     // Added field
+      categories: "Freight, Warehousing", // Added field
       serviceType: "Logistics",
       email: "alpha@logistics.com",
       website: "https://alphalogistics.com",
@@ -22,6 +25,9 @@ module.exports = buildModule("RegistryModule", (m) => {
       id: "beta",
       addr: "0x0000000000000000000000000000000000000002",
       name: "Beta Tech",
+      companyName: "Beta Technologies LLC", // Added field
+      country: "Canada",                   // Added field
+      categories: "Software, Consulting",  // Added field
       serviceType: "IT Consulting",
       email: "beta@tech.com",
       website: "https://betatech.com",
@@ -40,6 +46,9 @@ module.exports = buildModule("RegistryModule", (m) => {
       [
         s.addr,
         s.name,
+        s.companyName,    // Added argument
+        s.country,        // Added argument
+        s.categories,     // Added argument
         s.serviceType,
         s.email,
         s.website,
@@ -54,8 +63,6 @@ module.exports = buildModule("RegistryModule", (m) => {
 
   // Deploy the BuyerRegistry contract
   const buyerRegistry = m.contract("BuyerRegistry" /*, constructorArgs */);
-
- 
 
   return { supplierRegistry, buyerRegistry };
 });

@@ -4,11 +4,8 @@ import toast from "react-hot-toast";
 import { DocumentDuplicateIcon } from '@heroicons/react/24/outline'; // Heroicons (install if needed)
 import { useContractData } from './ContractContext';
 
-// import {abi  as BuyerRegistryABI } from '../../../artifacts/contracts/BuyerRegistry.sol/BuyerRegistry.json';
-import { useContractData } from './ContractContext';
 
-// import {abi  as BuyerRegistryABI } from '../../../artifacts/contracts/BuyerRegistry.sol/BuyerRegistry.json';
-//artifacts/contracts/BuyerRegistry.sol/BuyerRegistry.json
+
 
 
 // Create context

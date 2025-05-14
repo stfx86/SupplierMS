@@ -15,6 +15,7 @@ exports.registerSupplier = async  (req, res) => {
       categories,
       website,
       socials,
+      
       signature,
       walletAddress,
       timestamp, 
@@ -107,7 +108,7 @@ console.log("walletAddress.toLowerCase(): ",walletAddress.toLowerCase());
       });
     }
     
-    
+
 
 
 
