@@ -19,7 +19,6 @@ export const WalletProvider = ({ children }) => {
     const [isConnected, setIsConnected] = useState(false);
     const [walletAddress, setWalletAddress] = useState('');
     // const [BuyerRegistryAddress] = useState('0x5FbDB2315678afecb367f032d93F642f64180aa3'); 
-    // const [BuyerRegistryAddress] = useState('0x5FbDB2315678afecb367f032d93F642f64180aa3'); 
     const [message, setMessage] = useState(null);
     const [showPassphraseInput, setShowPassphraseInput] = useState(false);
     const [passphrase, setPassphrase] = useState('');
@@ -30,7 +29,7 @@ export const WalletProvider = ({ children }) => {
 
     
      
-    const { buyerRegistryData } = useContractData();
+  
 
     
      
@@ -74,9 +73,7 @@ export const WalletProvider = ({ children }) => {
       // console.log("BuyerRegistryData.abi:",buyerRegistryData.abi,"\n");
 
 
-      // console.log("BuyerRegistryData.address:",buyerRegistryData.address,"\n");
-      // console.log("BuyerRegistryData.abi:",buyerRegistryData.abi,"\n");
-       
+
 
 
         try {
@@ -117,7 +114,7 @@ export const WalletProvider = ({ children }) => {
             const derivedPubKey = derivedWallet.signingKey.publicKey;
 
             const registryContract = new ethers.Contract(buyerRegistryData.address, buyerRegistryData.abi, signer);
-            const registryContract = new ethers.Contract(buyerRegistryData.address, buyerRegistryData.abi, signer);
+           
             let tx;
             if (isRegistered) {
                 tx = await registryContract.updatePublicKey(derivedPubKey);
