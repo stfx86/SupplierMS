@@ -1,5 +1,6 @@
 const { ethers } = require('ethers');
 const { supplierRegistryData, buyerRegistryData, getFirstSigner } = require('../config/contracts');
+///
 
 const getSupplierContract = async () => {
     try {
@@ -90,6 +91,7 @@ const registerSupplier = async (supplierData) => {
 
 // ✅ New function
 const supplierExists = async (address) => {
+    
     try {
         const contract = await getSupplierContract();
         const supplierData = await contract.getSupplier(address);
@@ -99,6 +101,7 @@ const supplierExists = async (address) => {
         throw error;
     }
 };
+
 
 module.exports = {
     getSupplierContract,

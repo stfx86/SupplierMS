@@ -151,28 +151,34 @@ function canonicalize(obj) {
   form.append("walletAddress", walletAddress.toLowerCase());
   form.append("timestamp", timestamp);
 
-  try {
-    // const response = await fetch("/api/register", {
-      const response = await fetch("http://localhost:3000/api/suppliers/register", {
 
+try {
+  console.log("beore Fetch");
+    const response = await fetch("http://localhost:3000/api/suppliers/register", {
       method: "POST",
-      body:form,
+      body: form,
     });
-    
-    if (response.ok) {
-      const result = await response.json();
-      toast.success("Signature Verified! Supplier Request Submitted for Processing");
+    console.log("response",response);
 
+
+    const result = await response.json();
+console.log("response.status :",response.status );
+    if (response.ok) {
+      toast.success("Signature Verified! Supplier Request Submitted for Processing");
       console.log("Submitted successfully:", result);
     } else {
-      const errorText = await response.text();
-      console.error("Error response:", errorText);
+      if (response.status === 409) {
+        toast.success("Supplier already exists.");
+      } else {
+        toast.error(result?.error || "Failed to submit supplier registration.");
+      }
+      console.error("Error response:", result);
     }
-    
-  } 
-  catch (err) {
+  } catch (err) {
     console.error("Submission error:", err);
+    toast.error("Unexpected error occurred during submission.");
   }
+
   };
 
   return (

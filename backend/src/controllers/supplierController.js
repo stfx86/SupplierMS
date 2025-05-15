@@ -1,7 +1,9 @@
 const fs = require("fs");
 const verifySignature = require("../utils/verifySignature");
-const { supplierRegistryData , getFirstSigner  } = require('../config/contracts');
-const { supplierExists } = require("./../utils/contractUtils");
+const { getFirstSigner  } = require('../config/contracts');
+const { supplierExists ,registerSupplier } = require("./../utils/contractUtils");
+const {uploadSupplierProfile ,uploadJSONToIPFS, uploadFileToIPFS} = require("./../utils/ipfs");
+require('dotenv').config();
 
 
 exports.registerSupplier = async  (req, res) => {
@@ -89,7 +91,8 @@ console.log("walletAddress.toLowerCase(): ",walletAddress.toLowerCase());
 
     
 
-    if (signer.toLowerCase() !== walletAddress.toLowerCase()) {
+    if (signer.toLowerCase() !== walletAddress.toLowerCase()) { 
+
       return res.status(401).json({ error: "Signature does not match wallet address." });
     }
 
@@ -98,15 +101,101 @@ console.log("walletAddress.toLowerCase(): ",walletAddress.toLowerCase());
     //getting hardhat first singer , 
     console.log("hardhat firstSinger: ",(await getFirstSigner()).address);
 
-    console.log("supplier exist :",await supplierExists("0x0000000000000000000000000000000000000003"));
+    // console.log("supplier exist :",await supplierExists("0x0000000000000000000000000000000000000098"));
 
-    const exists = await supplierExists(walletAddress.toLowerCase());
+    const exists = await supplierExists(signer.toLowerCase());
+    console.log("exists: ",exists);
     if (exists) {
-      return res.status(409).json({
+
+      return   res.status(409).json({
         success: false,
         error: "Supplier already exists.",
+
+
       });
+
     }
+
+
+    ///registering the Supplier to the block chain
+
+   try  {
+
+
+
+//
+var fsp = require('fs/promises');
+
+const rawData = await fsp.readFile(
+  bioFile.path, // Added .json
+  'utf8'
+);
+
+const jsonData = JSON.parse(rawData);
+console.log(jsonData);
+const bioCID = await  uploadJSONToIPFS(jsonData);
+
+console.log("bioCID:", bioCID);
+
+//
+
+//
+const logoCID =await uploadFileToIPFS(logoFile.path);
+console.log("logoCID:", logoCID);
+//
+
+
+
+
+
+
+     console.log(socials);
+     const platforms = JSON.parse(socials).map(s => s.platform);
+     const links = JSON.parse(socials).map(s => s.url);
+     console.log("Platforms:", platforms);
+     console.log("Links:", links);
+
+
+
+     const tx = await registerSupplier(
+
+       {
+
+
+          name:name,
+          email:email,
+          serviceType:serviceType|| "",
+          companyName:companyName|| "",
+          country:country|| "",
+          categories:categories|| "",
+          website:website|| "",
+          platforms:platforms||[],
+          links:links||[],
+          logoCID: logoCID || "",
+          profileCID: bioCID ||"",
+          address: walletAddress.toLowerCase(),
+
+      }
+
+
+
+
+    );
+
+     console.log("registerSupplie TX : ",tx);
+
+
+
+
+
+
+   } catch(e){
+
+   console.error(e);
+   }
+
+
+
     
 
 

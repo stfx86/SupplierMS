@@ -5,6 +5,9 @@ contract SecureDelivery {
 
     // Struct to store transaction details
     struct Transaction {
+
+        
+
         address buyer;
         address payable supplier;
         uint amount;
