@@ -11,9 +11,9 @@ contract SecureDelivery {
         address buyer;
         address payable supplier;
         uint amount;
+        uint itemId;  // Item ID for tracking the item
         bool deliveryConfirmed;
         uint deadline;
-        uint itemId;  // Item ID for tracking the item
         bytes encryptedCID;  // encrypted with buyer's pubkey
         bytes encryptedKey;  // AES key encrypted with buyer's pubkey
     }

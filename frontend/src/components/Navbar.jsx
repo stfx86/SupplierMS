@@ -91,8 +91,8 @@ const Navbar = () => {
             <Link to="/" className="hover:text-blue-400 transition px-3 py-2">
               Home
             </Link>
-            <Link to="/browse-suppliers" className="hover:text-blue-400 transition px-3 py-2">
-              Browse Suppliers
+            <Link to="/marketplace" className="hover:text-blue-400 transition px-3 py-2">
+              Marketplace
             </Link>
             <Link to="/buyer-transactions" className="hover:text-blue-400 transition px-3 py-2">
               My Transactions
