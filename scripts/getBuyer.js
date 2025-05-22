@@ -32,8 +32,18 @@ async function verifyBuyer() {
             throw new Error('Contract not deployed at this address');
         }
 
+
+
+
+
         // Replace this address with the buyer you want to query
         const buyerAddress = '0x2546BcD3c84621e976D8185a91A922aE77ECEc30';
+
+
+
+
+
+
 
         const buyer = await buyerRegistry.getBuyer(buyerAddress);
 
