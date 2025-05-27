@@ -9,7 +9,7 @@ export default function({children}){
     return (
         // <div className=" min-h-screen bg-[#1A1F2C]   flex flex-col">
         // <div className=" min-h-screen    flex flex-col">
-        <div className="  flex flex-col min-h-screen">
+        <div className="  flex flex-col min-h-screen bg-zinc-50">
 
        
 

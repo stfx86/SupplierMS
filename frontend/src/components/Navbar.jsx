@@ -97,8 +97,8 @@ const Navbar = () => {
             <Link to="/buyer-transactions" className="hover:text-blue-400 transition px-3 py-2">
               My Transactions
             </Link>
-            <Link to="/supplier-dashboard" className="hover:text-blue-400 transition px-3 py-2">
-              Supplier Dashboard
+            <Link to="/dashboard" className="hover:text-blue-400 transition px-3 py-2">
+              Dashboard
             </Link>
             <Link to="/register" className="hover:text-blue-400 transition px-3 py-2">
               Register as Supplier
