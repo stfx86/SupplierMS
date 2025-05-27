@@ -7,7 +7,8 @@ import Form from './components/Form'
 import Index from "./pages/Index";
 import { Import } from "lucide-react";
 import Marketplace from "./pages/Marketplace";
-
+import Dashboard from "./pages/Dashboard";
+// import Dashboard from '.' 
 // import Form2 from './components/Form2'
 
 
@@ -26,6 +27,9 @@ function App() {
           <Route path="/marketplace" element={<Marketplace/>} />
 
           <Route path="/register" element={<Form/>}/>
+          <Route path="/dashboard" element={<Dashboard/>}/>
+
+          Dashboard
           <Route />
 
 
