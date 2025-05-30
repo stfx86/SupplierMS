@@ -8,8 +8,7 @@ import Index from "./pages/Index";
 import { Import } from "lucide-react";
 import Marketplace from "./pages/Marketplace";
 import Dashboard from "./pages/Dashboard";
-// import Dashboard from '.' 
-// import Form2 from './components/Form2'
+
 
 
 function App() {
